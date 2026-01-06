@@ -5,5 +5,15 @@
 </head>
 <body>
     <h1>Welcome to the Library</h1>
+    <h2>Hello {{ name }}</h2>
+
+    <h3>Your Books:</h3>
+    <ul>
+      {% for book in books %}
+        <li>{{ book }}</li>
+      {% empty %}
+        <li>No books available</li>
+      {% endfor %}
+    </ul>
 </body>
 </html>
