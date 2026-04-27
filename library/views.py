@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def get_books(request):
     books = Books.objects.all().values()
@@ -67,3 +68,8 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+#dashboard view
+@login_required
+def dashboard(request):
+    return render(request, 'library/auth/dashboard.html')
