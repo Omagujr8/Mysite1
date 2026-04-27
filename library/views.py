@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from .models import Book
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 
 def get_books(request):
     books = Books.objects.all().values()
@@ -28,3 +29,19 @@ def add_book(request):
         )
         return redirect("book_list")
     return render(request, 'library/add_book.html')
+
+
+#register view
+def register(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+
+        login(request, user)  # auto login after register
+        return redirect('dashboard')
+
+    return render(request, 'library/auth/register.html')
