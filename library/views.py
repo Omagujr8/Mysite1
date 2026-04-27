@@ -2,7 +2,8 @@ from django.http import JsonResponse
 from .models import Book
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate, logout
+from django.contrib import messages
 
 def get_books(request):
     books = Books.objects.all().values()
@@ -61,3 +62,8 @@ def login_user(request):
             messages.error(request, "Invalid username or password")
 
     return render(request, 'library/auth/login.html')
+
+#logout view/function
+def logout_user(request):
+    logout(request)
+    return redirect('login')
