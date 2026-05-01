@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -68,3 +69,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
  
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
