@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from . import views
 
 def get_books(request):
-    books = Books.objects.all().values()
+    books = Book.objects.all().values()
     return JsonResponse(books, safe=False)
 
 def home(request):
