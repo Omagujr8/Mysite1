@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import Book
 from .serializers import BookSerializer
+from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -47,3 +48,11 @@ def book_detail(request, pk):
     if request.method == 'DELETE':
         book.delete()
         return Response(status=204)   
+
+@api_view(['POST'])
+def register(request):
+    username = request.data.get('username')
+    password = request.data.get('password')
+
+    user = User.objects.create_user(username=username, password=password)
+    return Response({"message": "User created successfully"})
