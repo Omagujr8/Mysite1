@@ -9,6 +9,8 @@ SECRET_KEY = 'django-insecure-replace-this'
 # SECURITY WARNING: don't run with debug turned off in production!
 DEBUG = True
 
+AUTH_USER_MODEL = 'api.CustomUser'
+
 ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'library',
