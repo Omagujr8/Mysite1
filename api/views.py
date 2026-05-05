@@ -5,8 +5,13 @@ from .serializers import BookSerializer
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, BasePermission, IsAdminUser
 
+
+class IsAdminRole(BasePermission):
+    def has_permission(self, request, view):
+        return request.user and request.user.is_staff
+    
 class BookAPIView(APIView):
     def get(self, request):
         books = Book.objects.all()
@@ -62,3 +67,13 @@ def register(request):
 @permission_classes([IsAuthenticated])
 def protected_view(request):
     return Response({"message": "You are logged in!"})
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsAdminRole])
+def admin_dashboard(request):
+    return Response({"message": "Admin only"})
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def admin_only(request):
+    return Response({"message": "Only admin can see this"})
